@@ -1,5 +1,6 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import TodoItem from "./TodoItem";
+import getTodos from "../../API/getTodos";
 
 const TodoList = () => {
   // GET Todos
@@ -8,6 +9,12 @@ const TodoList = () => {
   const handleCompleteTodo = useCallback((todoId: string) => {
     // Call API to update Todo
     console.log(todoId);
+  }, []);
+
+  useEffect(() => {
+    getTodos().then((todos) => {
+      console.log(todos);
+    });
   }, []);
 
   return (
