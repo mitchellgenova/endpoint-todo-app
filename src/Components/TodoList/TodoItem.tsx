@@ -1,6 +1,6 @@
-import { useMemo } from "react";
 import { HandleCompleteTodoParams, TodoItemType } from "@/Types";
 import { dateFormatter } from "@/Utils/dates";
+import { memo, useMemo } from "react";
 
 interface TodoItemProps {
   handleCompleteTodo: (params: HandleCompleteTodoParams) => void;
@@ -11,13 +11,15 @@ const getTodoBackgroundColor = (todo: TodoItemType) => {
   if (todo.isComplete) {
     return "bg-green-300";
   }
+
   if (todo.dueDate && new Date(todo.dueDate) < new Date()) {
     return "bg-red-300";
   }
+
   return "bg-gray-300";
 };
 
-const TodoItem = ({ handleCompleteTodo, todo }: TodoItemProps) => {
+const TodoItem = memo(({ handleCompleteTodo, todo }: TodoItemProps) => {
   const formattedDueDate = useMemo(() => {
     if (todo.dueDate) {
       const date = new Date(todo.dueDate);
@@ -59,6 +61,6 @@ const TodoItem = ({ handleCompleteTodo, todo }: TodoItemProps) => {
       )}
     </div>
   );
-};
+});
 
 export default TodoItem;

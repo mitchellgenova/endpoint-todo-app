@@ -1,12 +1,13 @@
+import updateTodo from "@/API/updateTodo";
+import { NormalizedTodosType, UpdateTodoParams } from "@/Types";
 import {
   useMutation,
   UseMutationOptions,
   UseMutationResult,
   useQueryClient,
 } from "@tanstack/react-query";
-import updateTodo from "@/API/updateTodo";
-import { NormalizedTodosType, UpdateTodoParams } from "@/Types";
-import sortTodos from "@/Utils/sortTodos";
+import { getTodosQuery } from "./useGetTodos";
+import { produce } from "immer";
 
 interface OnMutateReturn {
   previousTodos: NormalizedTodosType | undefined;
@@ -26,34 +27,23 @@ const useUpdateTodo = ({
   OnMutateReturn
 > => {
   const queryClient = useQueryClient();
+  const { queryKey } = getTodosQuery();
 
   return useMutation({
     mutationFn: updateTodo,
     onMutate: async ({ todoId, body }) => {
-      await queryClient.cancelQueries({ queryKey: ["todos"] });
+      await queryClient.cancelQueries({ queryKey });
 
-      const previousTodos = queryClient.getQueryData<NormalizedTodosType>([
-        "todos",
-      ]);
+      const previousTodos = queryClient.getQueryData(queryKey);
 
-      queryClient.setQueryData<NormalizedTodosType>(["todos"], (oldTodos) => {
+      queryClient.setQueryData(queryKey, (oldTodos) => {
         if (oldTodos) {
-          // This can be greatly simplified by using Immer
-          const updatedTodos = {
-            ...oldTodos,
-            entities: {
-              ...oldTodos.entities,
-              [todoId]: {
-                ...oldTodos.entities[todoId],
-                ...body,
-              },
-            },
-          };
-
-          const sortedIds = sortTodos(
-            updatedTodos.ids.map((id) => updatedTodos.entities[id])
-          );
-          updatedTodos.ids = sortedIds.map((todo) => todo.id);
+          const updatedTodos = produce(oldTodos, (draft) => {
+            draft.entities[todoId] = {
+              ...draft.entities[todoId],
+              ...body,
+            };
+          });
 
           return updatedTodos;
         }
@@ -65,7 +55,7 @@ const useUpdateTodo = ({
     },
     onError: (_, __, context) => {
       if (context?.previousTodos) {
-        queryClient.setQueryData(["todos"], context.previousTodos);
+        queryClient.setQueryData(queryKey, context.previousTodos);
       }
     },
     onSettled: () => {

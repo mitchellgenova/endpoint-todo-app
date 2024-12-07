@@ -1,4 +1,4 @@
-import { useQuery, UseQueryOptions } from "@tanstack/react-query";
+import { queryOptions, useQuery, UseQueryOptions } from "@tanstack/react-query";
 import getTodos from "@/API/getTodos";
 import { NormalizedTodosType } from "@/Types";
 import sortTodos from "@/Utils/sortTodos";
@@ -25,9 +25,14 @@ type UseGetTodosProps<T> = Omit<
   "queryKey" | "queryFn"
 >;
 
+export const getTodosQuery = <T = NormalizedTodosType>() =>
+  queryOptions<NormalizedTodosType, Error, T>({
+    queryKey: ["todos"],
+    queryFn: getAndNormalizeTodos,
+  });
+
 const useGetTodos = <T = NormalizedTodosType>({
   ...options
-}: UseGetTodosProps<T> = {}) =>
-  useQuery({ queryKey: ["todos"], queryFn: getAndNormalizeTodos, ...options });
+}: UseGetTodosProps<T> = {}) => useQuery({ ...getTodosQuery<T>(), ...options });
 
 export default useGetTodos;
