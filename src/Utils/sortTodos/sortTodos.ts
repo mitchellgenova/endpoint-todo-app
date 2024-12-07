@@ -2,16 +2,20 @@ import { TodoItemType } from "@/Types";
 
 const sortTodos = (todos: TodoItemType[]) =>
   [...todos].sort((todoA, todoB) => {
+    const now = new Date();
+
     // Step 1: Handle overdue items
     const isOverdueA =
-      todoA.dueDate &&
-      new Date(todoA.dueDate) < new Date() &&
-      !todoA.isComplete;
+      todoA.dueDate && new Date(todoA.dueDate) < now && !todoA.isComplete;
     const isOverdueB =
-      todoB.dueDate &&
-      new Date(todoB.dueDate) < new Date() &&
-      !todoB.isComplete;
+      todoB.dueDate && new Date(todoB.dueDate) < now && !todoB.isComplete;
 
+    if (isOverdueA && isOverdueB) {
+      // Sort by the most overdue first
+      return (
+        new Date(todoA.dueDate!).getTime() - new Date(todoB.dueDate!).getTime()
+      );
+    }
     if (isOverdueA && !isOverdueB) return -1;
     if (!isOverdueA && isOverdueB) return 1;
 
@@ -19,6 +23,13 @@ const sortTodos = (todos: TodoItemType[]) =>
     const isIncompleteA = !todoA.isComplete && todoA.dueDate !== null;
     const isIncompleteB = !todoB.isComplete && todoB.dueDate !== null;
 
+    if (isIncompleteA && isIncompleteB) {
+      // Sort by the soonest due date
+      return new Date(todoA.dueDate!).getTime() >
+        new Date(todoB.dueDate!).getTime()
+        ? 1
+        : -1;
+    }
     if (isIncompleteA && !isIncompleteB) return -1;
     if (!isIncompleteA && isIncompleteB) return 1;
 

@@ -1,4 +1,4 @@
-import updateTodo from "@/API/updateTodo";
+import updateTodo from "@/API/updateTodo/updateTodo";
 import { NormalizedTodosType, UpdateTodoParams } from "@/Types";
 import {
   useMutation,

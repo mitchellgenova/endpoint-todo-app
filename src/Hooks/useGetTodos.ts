@@ -1,9 +1,9 @@
 import { queryOptions, useQuery, UseQueryOptions } from "@tanstack/react-query";
-import getTodos from "@/API/getTodos";
+import getTodos from "@/API/getTodos/getTodos";
 import { NormalizedTodosType } from "@/Types";
-import sortTodos from "@/Utils/sortTodos";
+import sortTodos from "@/Utils/sortTodos/sortTodos";
 
-const getAndNormalizeTodos = async () => {
+export const getAndNormalizeTodos = async () => {
   const todos = await getTodos();
 
   const sortedTodos = sortTodos(todos);

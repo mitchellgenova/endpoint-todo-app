@@ -1,5 +1,5 @@
 import { TodoItemType } from "@/Types";
-import customFetch from "@/Utils/customFetch";
+import customFetch from "@/Utils/customFetch/customFetch";
 
 const getTodos = async (): Promise<TodoItemType[]> => {
   const todos = await customFetch({

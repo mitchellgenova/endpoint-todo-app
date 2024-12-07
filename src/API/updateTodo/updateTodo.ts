@@ -1,5 +1,5 @@
 import { UpdateTodoParams } from "@/Types";
-import customFetch from "@/Utils/customFetch";
+import customFetch from "@/Utils/customFetch/customFetch";
 
 const updateTodo = ({ body, todoId }: UpdateTodoParams) => {
   return customFetch({
