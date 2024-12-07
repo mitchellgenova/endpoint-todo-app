@@ -2,16 +2,23 @@ import { useCallback } from "react";
 import useGetTodos from "../../Hooks/useGetTodos";
 import TodoItem from "./TodoItem";
 import LoadingSpinner from "../Shared/LoadingSpinner";
+import useUpdateTodo from "../../Hooks/useUpdateTodo";
 
 const TodoList = () => {
-  // Create function for updating Todos, useCallback for memoization
-
-  const handleCompleteTodo = useCallback((todoId: string) => {
-    // Call API to update Todo
-    console.log(todoId);
-  }, []);
-
   const { data, isLoading } = useGetTodos();
+  const { mutate } = useUpdateTodo();
+
+  const handleCompleteTodo = useCallback(
+    (todoId: string) => {
+      mutate({
+        body: {
+          isComplete: true,
+        },
+        todoId,
+      });
+    },
+    [mutate]
+  );
 
   if (isLoading) {
     return <LoadingSpinner />;

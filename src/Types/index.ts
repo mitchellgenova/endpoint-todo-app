@@ -4,3 +4,13 @@ export interface TodoItemType {
   isComplete: boolean;
   dueDate: string | null;
 }
+
+export interface NormalizedTodosType {
+  ids: string[];
+  entities: Record<string, TodoItemType>;
+}
+
+export interface UpdateTodoParams {
+  body: Pick<TodoItemType, "isComplete">;
+  todoId: string;
+}

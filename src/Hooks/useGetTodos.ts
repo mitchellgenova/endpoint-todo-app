@@ -1,12 +1,7 @@
 import { useQuery, UseQueryOptions } from "@tanstack/react-query";
 import getTodos from "../API/getTodos";
-import { TodoItemType } from "../Types";
+import { NormalizedTodosType } from "../Types";
 import sortTodos from "../Utils/sortTodos";
-
-interface NormalizedTodosType {
-  ids: string[];
-  entities: Record<string, TodoItemType>;
-}
 
 const getAndNormalizeTodos = async () => {
   const todos = await getTodos();
