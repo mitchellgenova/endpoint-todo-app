@@ -25,8 +25,7 @@ const TodoList = () => {
   }
 
   return (
-    <div>
-      <h1>Todo List</h1>
+    <div className="flex flex-col gap-3">
       {data?.ids.map((id) => (
         <TodoItem
           key={id}

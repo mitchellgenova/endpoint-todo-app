@@ -10,7 +10,9 @@ function App() {
       <ReactQueryDevtools />
       <div>
         <Navbar />
-        <TodoList />
+        <section className="mx-auto max-w-lg mt-4 px-5">
+          <TodoList />
+        </section>
       </div>
     </Providers>
   );
