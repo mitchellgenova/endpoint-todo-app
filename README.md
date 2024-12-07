@@ -24,5 +24,5 @@ Add in the API key from the email Susan sent:
 ```npm run dev```
 
 ### (Optional) Run Unit Tests
-Although there is not complete code coverage, they are focused on areas with heavy logic.
+Although there is not complete code coverage, they are focused on areas with heavy logic. <br>
 ```npm run test```
