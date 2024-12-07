@@ -1,9 +1,9 @@
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
+import useGetTodos from "../../Hooks/useGetTodos";
 import TodoItem from "./TodoItem";
-import getTodos from "../../API/getTodos";
+import LoadingSpinner from "../Shared/LoadingSpinner";
 
 const TodoList = () => {
-  // GET Todos
   // Create function for updating Todos, useCallback for memoization
 
   const handleCompleteTodo = useCallback((todoId: string) => {
@@ -11,24 +11,22 @@ const TodoList = () => {
     console.log(todoId);
   }, []);
 
-  useEffect(() => {
-    getTodos().then((todos) => {
-      console.log(todos);
-    });
-  }, []);
+  const { data, isLoading } = useGetTodos();
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <div>
       <h1>Todo List</h1>
-      <TodoItem
-        todo={{
-          id: "1",
-          description: "Learn React",
-          isComplete: false,
-          dueDate: "2021-10-01",
-        }}
-        handleCompleteTodo={handleCompleteTodo}
-      />
+      {data?.ids.map((id) => (
+        <TodoItem
+          key={id}
+          todo={data.entities[id]}
+          handleCompleteTodo={handleCompleteTodo}
+        />
+      ))}
     </div>
   );
 };
