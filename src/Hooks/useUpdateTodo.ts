@@ -4,9 +4,9 @@ import {
   UseMutationResult,
   useQueryClient,
 } from "@tanstack/react-query";
-import updateTodo from "../API/updateTodo";
-import { NormalizedTodosType, UpdateTodoParams } from "../Types";
-import sortTodos from "../Utils/sortTodos";
+import updateTodo from "@/API/updateTodo";
+import { NormalizedTodosType, UpdateTodoParams } from "@/Types";
+import sortTodos from "@/Utils/sortTodos";
 
 interface OnMutateReturn {
   previousTodos: NormalizedTodosType | undefined;

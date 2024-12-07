@@ -1,4 +1,4 @@
-import { TodoItemType } from "../Types";
+import { TodoItemType } from "@/Types";
 
 const sortTodos = (todos: TodoItemType[]) =>
   [...todos].sort((todoA, todoB) => {

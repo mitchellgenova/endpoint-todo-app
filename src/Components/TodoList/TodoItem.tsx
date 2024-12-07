@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import { TodoItemType } from "../../Types";
-import { dateFormatter } from "../../Utils/dates";
+import { TodoItemType } from "@/Types";
+import { dateFormatter } from "@/Utils/dates";
 
 interface TodoItemProps {
   handleCompleteTodo: (id: string) => void;

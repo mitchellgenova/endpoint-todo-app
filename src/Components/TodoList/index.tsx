@@ -1,23 +1,23 @@
 import { useCallback } from "react";
-import useGetTodos from "../../Hooks/useGetTodos";
-import TodoItem from "./TodoItem";
-import LoadingSpinner from "../Shared/LoadingSpinner";
-import useUpdateTodo from "../../Hooks/useUpdateTodo";
+import useGetTodos from "@/Hooks/useGetTodos";
+import TodoItem from "@/Components/TodoList/TodoItem";
+import LoadingSpinner from "@/Components/Shared/LoadingSpinner";
+import useUpdateTodo from "@/Hooks/useUpdateTodo";
 
 const TodoList = () => {
   const { data, isLoading } = useGetTodos();
-  const { mutate } = useUpdateTodo();
+  const { mutate: updateTodo } = useUpdateTodo();
 
   const handleCompleteTodo = useCallback(
     (todoId: string) => {
-      mutate({
+      updateTodo({
         body: {
           isComplete: true,
         },
         todoId,
       });
     },
-    [mutate]
+    [updateTodo]
   );
 
   if (isLoading) {
