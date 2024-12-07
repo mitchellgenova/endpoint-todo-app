@@ -1,9 +1,9 @@
 import { useMemo } from "react";
-import { TodoItemType } from "@/Types";
+import { HandleCompleteTodoParams, TodoItemType } from "@/Types";
 import { dateFormatter } from "@/Utils/dates";
 
 interface TodoItemProps {
-  handleCompleteTodo: (id: string) => void;
+  handleCompleteTodo: (params: HandleCompleteTodoParams) => void;
   todo: TodoItemType;
 }
 
@@ -38,11 +38,18 @@ const TodoItem = ({ handleCompleteTodo, todo }: TodoItemProps) => {
           id="completeTodo"
           className="w-6 h-6 group-hover:cursor-pointer"
           type="checkbox"
-          onChange={() => handleCompleteTodo(todo.id)}
+          onChange={() =>
+            handleCompleteTodo({
+              todoId: todo.id,
+              isComplete: !todo.isComplete,
+            })
+          }
           checked={todo.isComplete}
         />
         <label htmlFor="completeTodo" className="group-hover:cursor-pointer">
-          <span className="truncate">{todo.description}</span>
+          <span className={`truncate ${todo.isComplete ? "line-through" : ""}`}>
+            {todo.description}
+          </span>
         </label>
       </div>
       {formattedDueDate && (

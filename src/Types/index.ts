@@ -14,3 +14,8 @@ export interface UpdateTodoParams {
   body: Pick<TodoItemType, "isComplete">;
   todoId: string;
 }
+
+export interface HandleCompleteTodoParams {
+  todoId: string;
+  isComplete: boolean;
+}

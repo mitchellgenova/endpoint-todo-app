@@ -3,16 +3,17 @@ import useGetTodos from "@/Hooks/useGetTodos";
 import TodoItem from "@/Components/TodoList/TodoItem";
 import LoadingSpinner from "@/Components/Shared/LoadingSpinner";
 import useUpdateTodo from "@/Hooks/useUpdateTodo";
+import { HandleCompleteTodoParams } from "@/Types";
 
 const TodoList = () => {
   const { data, isLoading } = useGetTodos();
   const { mutate: updateTodo } = useUpdateTodo();
 
   const handleCompleteTodo = useCallback(
-    (todoId: string) => {
+    ({ todoId, isComplete }: HandleCompleteTodoParams) => {
       updateTodo({
         body: {
-          isComplete: true,
+          isComplete,
         },
         todoId,
       });
