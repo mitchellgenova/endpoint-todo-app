@@ -10,8 +10,6 @@ const TodoList = () => {
   const { data, isLoading } = useGetTodos();
   const { mutate: updateTodo } = useUpdateTodo();
 
-  console.log(data);
-
   const handleCompleteTodo = useCallback(
     ({ todoId, isComplete }: HandleCompleteTodoParams) => {
       updateTodo({
