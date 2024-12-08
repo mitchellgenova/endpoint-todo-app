@@ -9,11 +9,11 @@ interface TodoItemProps {
 
 const getTodoBackgroundColor = (todo: TodoItemType) => {
   if (todo.isComplete) {
-    return "bg-green-300";
+    return "bg-green-300 dark:bg-green-600";
   }
 
   if (todo.dueDate && new Date(todo.dueDate) < new Date()) {
-    return "bg-red-300";
+    return "bg-red-300 dark:bg-red-400";
   }
 
   return "bg-gray-300";
